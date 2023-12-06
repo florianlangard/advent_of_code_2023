@@ -42,21 +42,51 @@ function trimNSplit(string $item) {
     return $arr;
 }
 
+$gameVals = [];
+
 foreach ($filteredInputs as $index => $gameDraws) {
-    
+
+    $highRed = 0;
+    $highGreen = 0;
+    $highBlue = 0;
+
     foreach ($gameDraws as $key => $draw) {
         // var_dump($draw);
+        
         foreach ($draw as $k => $v) {
-            $test = trimNSplit($v);
             
-            if ($test[0] > $base[$test[1]]) {
-                unset($idsTab[$index]);
-                break 2;
+            $test = trimNSplit($v);
+
+            //= Part Two ====================
+            if ($test[1] === "red") {
+                if ($test[0] > $highRed) {
+                    $highRed = $test[0];
+                }
             }
-            else {
+            if ($test[1] === "green") {
+                if ($test[0] > $highGreen) {
+                    $highGreen = $test[0];
+                }
+            }
+            if ($test[1] === "blue") {
+                if ($test[0] > $highBlue) {
+                    $highBlue = $test[0];
+                }
+            }
+            
+            $gameVals[$index]["red"] = $highRed;
+            $gameVals[$index]["green"] = $highGreen;
+            $gameVals[$index]["blue"] = $highBlue;
+            
+            //= Part One =================
+            // if ($test[0] > $base[$test[1]]) {
+            //     unset($idsTab[$index]);
+            //     break 2;
+            // }
+            // else {
                 
-                $idsTab[$index] = $index;
-            }
+            //     $idsTab[$index] = $index;
+            // }   
         }
     }
 }
@@ -65,9 +95,18 @@ $res = array_sum($idsTab);
 
 //= Part Two =========================================
 
+function multi($arr) {
+    $totalPower = 0;
+    foreach ($arr as $game) {
+        $gamepower = array_product($game);
+        $totalPower += $gamepower;
+    }
+    return $totalPower;
+}
 
+$res2 = multi($gameVals);
 
 echo "<pre>";
-print_r($res);
+print_r($res2);
 echo "</pre>";
 
