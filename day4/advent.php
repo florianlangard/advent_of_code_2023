@@ -67,6 +67,30 @@ $res = array_sum($totalPts);
 
 //= Part Two =========================================
 
+$nbInstances = [];
+
+foreach ($inter as $index => $value) {
+    $nbInstances[$index] = 1;
+}
+
+
+
+foreach ($inter as $index => $match) {
+    
+    $count = count($inter[$index]);
+    
+    for ($j = 0; $j < $nbInstances[$index]; $j++) {
+
+        for ($i=1; $i <= $count; $i++) { 
+            $nbInstances[$index+$i] += 1;
+            
+            
+        }
+    }
+    
+}
+
+$res = array_sum($nbInstances);
 
 echo "<pre>";
 print_r($res);
